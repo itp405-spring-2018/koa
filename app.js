@@ -1,12 +1,17 @@
 const Koa = require('koa');
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
+const cors = require('@koa/cors');
+
 const Genre = require('./models/genre');
 
 const app = new Koa();
 const router = new Router();
 
 app.use(bodyParser());
+app.use(cors({
+  // origin: 'http://localhost:3000'
+}));
 
 router.get('/api/genres', async (context) => {
   let genres = await Genre.fetchAll();
@@ -58,4 +63,4 @@ router.post('/api/genres', async (context) => {
 });
 
 app.use(router.routes());
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 8000);
